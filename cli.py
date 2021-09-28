@@ -63,7 +63,7 @@ class OpenNotifyCLI:
         for craft, people in crafts.items():  # Print a line detailing each craft
             names = [name for name in people]
             names = ', '.join(name for name in names)
-            print(f"There are {len(people)} people aboard the {craft}. They are {names}")
+            print(f"There are {len(people)} people aboard the {craft}. They are {names}.")
 
 
 if __name__ == '__main__':
