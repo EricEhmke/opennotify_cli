@@ -5,6 +5,9 @@ from cli import OpenNotifyCLI
 
 
 class MockRequestObjSuccess:
+    """
+    A mock successful API request object
+    """
     def __init__(self, **kwargs):
         self.ok = True
 
@@ -19,11 +22,39 @@ class MockRequestObjSuccess:
 
 
 class MockRequestObjFail:
+    """
+    A mock failed API request object
+    """
     def __init__(self, **kwargs):
         self.ok = False
 
     def raise_for_status(self):
         raise requests.HTTPError
+
+
+class MockAPIWrapper:
+    """
+    Supplies mock functions for monkeypatching the OpenNotify API wrapper
+    """
+    def loc(self):
+        return {"message": "success",
+                "timestamp": 123456789,
+                "iss_position": {
+                    "longitude": "-10.1234",
+                    "latitude": "31.41592"
+                }
+                }
+
+    def people(self):
+        return {"message": "success",
+                "number": 4,
+                "people": [
+                    {"name": "James Tiberius Kirk", "craft": "NCC-1701"},
+                    {"name": "Chris Hadfield", "craft": "ISS"},
+                    {"craft": "NCC-1701", "name": "S’chn T’gai Spock"},
+                    {"name": "Hikaru Kato Sulu"}
+                ]
+                }
 
 
 class TestRequest:
@@ -120,32 +151,15 @@ class TestAPI:
         # additional information but is not printed normally
 
 
-class MockAPIWrapper:
-
-    def loc(self):
-        return {"message": "success",
-                "timestamp": 123456789,
-                "iss_position": {
-                    "longitude": "-10.1234",
-                    "latitude": "31.41592"
-                }
-                }
-
-    def people(self):
-        return {"message": "success",
-                "number": 4,
-                "people": [
-                    {"name": "James Tiberius Kirk", "craft": "NCC-1701"},
-                    {"name": "Chris Hadfield", "craft": "ISS"},
-                    {"craft": "NCC-1701", "name": "S’chn T’gai Spock"},
-                    {"name": "Hikaru Kato Sulu"}
-                ]
-                }
-
-
 class TestCLI:
 
     def test_loc_format(self, monkeypatch, capsys):
+        """
+        Tests the output of the loc arg for correct results format
+        :param monkeypatch: pytest fixture
+        :param capsys: pytest fixture
+        :return: assertion
+        """
         open_notify_cli = OpenNotifyCLI()
         monkeypatch.setattr(open_notify_cli, 'api', MockAPIWrapper())
         open_notify_cli.loc()
@@ -153,6 +167,12 @@ class TestCLI:
         assert captured.out == "The ISS current location at 1973-11-29 16:33:09 is 31.41592, -10.1234\n"
 
     def test_people_format(self, monkeypatch, capsys):
+        """
+        Tests the output of the people art for correct results format
+        :param monkeypatch: pytest fixture
+        :param capsys: pytest fixture
+        :return: assertion
+        """
         open_notify_cli = OpenNotifyCLI()
         monkeypatch.setattr(open_notify_cli, 'api', MockAPIWrapper())
         open_notify_cli.people()
