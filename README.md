@@ -1,4 +1,4 @@
-#Open Notify CLI#
+# Open Notify CLI
 
 ## Description
 A simple CLI and python wrapper for the Open-Notify API. This CLI returns the current position of 
