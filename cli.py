@@ -1,5 +1,5 @@
 import argparse
-from opennotify.api import OpenNotify
+from opennotify.api.api import OpenNotify
 from config import CLI_DESCRIPTION
 from datetime import datetime
 

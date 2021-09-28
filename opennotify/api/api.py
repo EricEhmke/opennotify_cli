@@ -1,12 +1,12 @@
 import requests
-from opennotify.config import BASE_URL
+from .config import BASE_URL
 
 
 class OpenNotifyRequest:
 
     def __init__(self):
         self._base_url = BASE_URL.rstrip('/')
-        self.session = requests.Session()
+        self.request_obj = requests.Session().request
 
     def request(self, endpoint: str, method: str = 'GET', url_params: dict = None):
         """
@@ -17,7 +17,7 @@ class OpenNotifyRequest:
         :return: JSON response
         """
         url = f'{self._base_url}/{endpoint}'
-        response = self.session.request(method=method, url=url, params=url_params)
+        response = self.request_obj(method=method, url=url, params=url_params)
 
         if response.ok:
             return response
@@ -42,6 +42,7 @@ class OpenNotify:
             response = response.json()
         except requests.HTTPError as e:
             # Return mock data if API is down to show functionality of app
+            # This would normally retry or supply more a reasonable alternative
             response = {"message": "success",
                         "timestamp": 123456789,
                         "iss_position": {
@@ -64,6 +65,7 @@ class OpenNotify:
             response = response.json()
         except requests.HTTPError as e:
             # Return mock data if API is down to show app functionality
+            # This would normally retry or supply more a reasonable alternative
             response = {"message": "success",
                         "number": 4,
                         "people": [
@@ -72,6 +74,6 @@ class OpenNotify:
                             {"craft": "NCC-1701", "name": "S’chn T’gai Spock"},
                             {"name": "Hikaru Kato Sulu"}
                             ],
-                        "e": e
+                        "exception": e
                         }
         return response
