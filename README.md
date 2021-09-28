@@ -9,10 +9,9 @@ the ISS along with information about current astronauts and their spacecrafts.
 Clone this git repo and run `cli.py` from the command line.
 
 Available commands:
-    - `loc` : Get the current coordinates for the ISS
-    - `people` : Get the names of people currently in space, along with the spacecraft
-    they are on.  
-    - '-h': View help
+- `loc` : Get the current coordinates for the ISS
+- `people` : Get the names of people currently in space, along with the spacecraft they are on.  
+- '-h': View help
     
 ## Original Prompt 
 Implement a Python script that will accept the following command-line arguments, along with any required information, and print the expected results.  Please also use python data-classes to create a python native interface for the responses from the api.
@@ -29,7 +28,6 @@ Implement a Python script that will accept the following command-line arguments,
 
  
 
-Additional
 
 Sometimes the open-notify API will have some endpoints that are not available due to load, your application should be able to handle this case and you can use some mock data to show how it would work 
 
@@ -39,7 +37,7 @@ For location the following would be some mock data from the api:
 
  
 
-{“message”:  “success”, “timestamp”: 123456789, “iss_position”: {“longitude”: “-10.1234”, “latitude”: “31.41592”}}
+`{“message”:  “success”, “timestamp”: 123456789, “iss_position”: {“longitude”: “-10.1234”, “latitude”: “31.41592”}}`
 
  
 
@@ -47,7 +45,7 @@ For the current crew on the iss, an example might be:
 
  
 
-{“message”: “success”, “number”: 4, “people”: [{“name”: “James Tiberius Kirk”, “craft”: “NCC-1701”}, {“name”: “Chris Hadfield”, “craft”: “ISS”}, {“craft”: “NCC-1701”, “name”: “S’chn T’gai Spock”}, {“name”: “Hikaru Kato Sulu”}]} 
+`{“message”: “success”, “number”: 4, “people”: [{“name”: “James Tiberius Kirk”, “craft”: “NCC-1701”}, {“name”: “Chris Hadfield”, “craft”: “ISS”}, {“craft”: “NCC-1701”, “name”: “S’chn T’gai Spock”}, {“name”: “Hikaru Kato Sulu”}]}`
 
 ## Assumptions and Implementation Questions
 These are question I would have asked during the design phase to clarify ambiguous requirements.
