@@ -1,0 +1,1 @@
+A simple CLI for the Open-Notify API
